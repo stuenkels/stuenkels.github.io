@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cisco 2504 WLC Configuration and for Student Lab use with a 1040 Aironet Access Point</title>
+    <link rel="stylesheet" href="../main.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div id="pfpmove">
+            <div id="pfp" class="cropcircle"></div>
+        </div>
+        <div id="textalign">
+            <a href="https://www.github.com/stuenkels" id="pfptext">Stuenkels</a>
+            <p id="undertext"><em>Public record of personal doccumintation</em></p>
+        </div>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../newest.html">New</a></li>
+            <li><a href="../about.html">About</a></li>
+        </ul>
+
+    </div>  
+    <div class="main">
+        
+        <div class="filler"></div>
+        
+        <div class="heading">
+            <a href="./index.html" id="pageTitle">Networking and Electronics and Programming, Oh My!</a>
+        </div>
+        <div class="content">
+            <div class="post">
+                <h2 id="contentTitle">Cisco 2504 WLC Configuration and for Student Lab use with a 1040 Aironet Access Point</h2>
+                <br>
+                <h6 id="contentDate">4/16/24</h6>
+                <a href="https://www.github.com" id="contentDate">Github Project</a>
+            </div>
+            <pre id="contentText">    Cisco 2400 series WLCs on a blank configuration force the user into an initial configuration dialog on boot. To allow for simplicity and ease of use of these controllers in a Cisco Networking Academy lab environment, a default bare-bones configuration is required. This configuration specifies the management IP and subnet mask, management interface, and management VLAN tag. Additionally, to maintain compatibility with a Cisco 1040 series and other EOL lightweight access points, certificate validation must be disabled. This configuration is uploaded to my Github account if you are interested, you can find the link at the top of the page.</pre>
+            <h3 id="contentSubTitle">WLC Configuration Details</h3>
+            <div class="codeLayout">
+                <pre id="code">AireOS Image:                8.2.151.0</pre>
+                <pre id="code">Management IP:               10.0.0.2/24 </pre>
+                <pre id="code">Management Interface:        Ethernet 1 </pre>
+                <pre id="code">Management VLAN tag:         99 </pre>
+                <pre id="code">Administrative username:     admin </pre>
+                <pre id="code">Administrative password:     P@ssword </pre>
+            </div>
+            <h3 id="contentSubTitle">AP Configuration Details</h3>
+            <div class="codeLayout">
+                <pre id="code">IOS Image:                   15.3(3)JC6</pre>
+                <pre id="code">Management IP:               DHCP Assigned</pre>
+                <pre id="code">Administrative username:     Cisco</pre>
+                <pre id="code">Administrative password:     Cisco</pre>
+            </div>
+            <h3 id="contentSubTitle">Additional WLC Commands</h3>
+            <div class="codeLayout">
+                <pre id="code">ap cert-expiry-ignore mic enable</pre>
+                <pre id="code">ap cert-expiry-ignore ssc enable</pre>
+            </div>
+
+
+
+            <pre id="contentText">    These commands instruct the WLC to ignore the expired certificate on EOL Access Points, allowing for the successful forming of a CAPWAP protocol connection. This is not something that should be enabled in a production environment, only in an air-gaped lab for educational purposes.</pre>
+            <pre id="contentText">    It is very important to make sure the AireOS and IOS images on the two devices are compatible, otherwise the CAPWAP tunnel will not form. These are not the only compatible images, make sure to check Cisco's official Compatibility matrix.</pre>
+            
+            <h3 id="contentSubTitle">Example topology configuration details:</h3>
+            <div id="inPostImageLayout">
+                <img src="../images/figure1.png" alt="Network" style="width:40vw"> 
+            </div>
+            <pre id="contentText">    The physical topology diagram, illustrated in the above image, shows the recommended minimum hardware and connections required in order to configure a WLC and have a wireless networking broadcasted. While a POE switch is not strictly required, without it the access point must be provided with an external power supply.</pre>
+            <h3 id="contentSubTitle">Switch Configuration:</h3>
+            <pre id="contentText">    The switch in which all devices are connected, while not needing much configuration, must support trunking on the interface connected to the WLC, as well as placing the Admin PC interface and the AP interface in the proper VLAN access group. I have configured the management VLAN as VLAN99.</pre>
+            <h3 id="contentSubTitle">Admin PC:</h3>
+            <pre id="contentText">    The administrative PC must be assigned an IP address in the 10.0.0.0/24 subnet, excluding 10.0.0.2 which is assigned to the WLC. The WLC is configured using a web browser and the HTTPS protocol (https://10.0.0.2). From there, a DHCP server can be enabled on the WLC to assign IP addresses to the access points, which require a dynamic IP to establish a connection to the controller.</pre>
+            <pre id="contentText">    I am in the process of writing a second post covering some challenges I faced with the mass deployment of this configuration, and some scripts I wrote for automating the process. I will also create some example labs that could be distributed to students.</pre>
+            
+            <br>
+            <br>
+        </div>
+        
+    </div>
+</body>
+</html>
+
+

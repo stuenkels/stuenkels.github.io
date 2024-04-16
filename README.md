@@ -1,2 +1,2 @@
 # stuenkels.github.io
-Hosting a static blog
+Hosting a static blog.

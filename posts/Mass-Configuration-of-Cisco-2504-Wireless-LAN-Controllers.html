@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problems and Solution to the Mass Configuration of Cisco 2504 Wireless LAN Controllers</title>
+    <link rel="stylesheet" href="../main.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div id="pfpmove">
+            <div id="pfp" class="cropcircle"></div>
+        </div>
+        <div id="textalign">
+            <a href="https://www.github.com/stuenkels" id="pfptext">Stuenkels</a>
+            <p id="undertext"><em>Public record of personal doccumintation</em></p>
+        </div>
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../newest.html">New</a></li>
+            <li><a href="../about.html">About</a></li>
+        </ul>
+
+    </div>  
+    <div class="main">
+        
+        <div class="filler"></div>
+        
+        <div class="heading">
+            <a href="./index.html" id="pageTitle">Networking and Electronics and Programming, Oh My!</a>
+        </div>
+        <div class="content">
+            <div class="post">
+                <h2 id="contentTitle">Problems and Solution to the Mass Configuration of Cisco 2504 Wireless LAN Controllers</h2>
+                <br>
+                <h6 id="contentDate">Published 4/27/24</h6>
+                <a href="https://github.com/stuenkels/Cisco-2500-WLC-Configuration-For-Labs" id="contentDate">Github Project</a>
+            </div>
+            <pre id="contentText">    Wireless LAN Controllers, or WLCs are a device that can configure and control light weight access points over the CAPWAP protocol. While Cisco provides ample documentation for an initial configuration of the devices, this document lays out issues found while configuring over 15 WLCs for a Cisco Networking Acadamy Lab. </pre>
+            <h3 id="contentSubTitle">What is a “lightweight access point"</h3>
+            <pre id="contentText">    Cisco uses the term lightweight access point (LWAP) to define a device which contains a wireless radio and IOS image, but requires a connection to a WLC. The advantage of this approach means many access points can be installed in a building without the need to configure each individual one. Additionally if an organization needs to update or change configuration settings the WLC will push the configuration to each device. Many Cisco access points can be setup as either lightweight access point or a “stand-alone” access point. The IOS image must be changed if you wish to convert between the two. The label, “k9w8”, included in the name of the IOS image file, denotes the version is for a lightweight access point; k9w7 is used to denote a stand-alone access point. </pre>
+            <h3 id="contentSubTitle">Managing WLC images</h3>
+
+            <pre id="contentText">    2000 Series Wireless LAN Controllers do not use Cisco IOS, but instead a custom real-time operating system called AireOS. A real-time operating system, or RTOS, put simply a an operating system in which multiple applications are ran with precise and predictable timing and scheduling. AireOS images are distributed as .aes files. .aes files are a propitiatory collection of files, similar to a zip or tar file. The name is confusing, as the file itself has nothing to do with AES encryption. Each .aes file contains an AireOS image, code to install that image, and a collection of compatible IOS images for access points. I have examined a hex dump of a .aes file, verifying data is stored in plane text and not AES encrypted, but have not found a way to extract individual files from the .aes file itself. </pre>
+            <pre id="contentText">    Because updating from the GUI or CLI would require waiting for each device to boot, something that takes almost 10 minutes, I decided to look for other options. When booting a Cisco 2504 WLC, you can optionally escape booting and instead enter a boot menu. Depending on the boot loader version, there is a menu option to update the WLC. I thought it would be easy to upload my .aes file from there, and easily update the image on each controller. However updating from the boot menu requires the RTOS image to be by itself, meaning it requires one of the files bundled in the .aes file extracted. This turned out to be a dead end for WLC imaging. </pre>
+            <pre id="contentText">    While attempting a repair of a broken power connector on one of the WLCs, I noticed that they have a removable compact flash card built in each one, which stores AireOS images, as well as the configuration. I spent time configuring and updating one WLC, then simply copied a disk image of the compact flash card to my computer. This allowed me to quickly update every WLC; the only thing that holds 2504 WLCs together is two small screws. I was also able to update the configuration and image at the same time, instead of having to boot the device multiple times and spend hours uploading each change separately. </pre>
+            <h3 id="contentSubTitle">Certificates</h3>
+
+            <pre id="contentText">    With my controllers imaged and configured, I set out to create an example lab to guide students through the process of enabling a wireless network. This is when I encountered a very large problem. For some reason, the access points I was using where unable to create a CAPWAP connection to the controller. Looking at the console output on the LWAP I realized the certificate that the access point uses for CAPWAP encryption was not yet valid. This is because the time and date on each controller are not saved in the configuration, but on a real time clock chip, or RTC. This is to maintain the time when the device is underpowered, as a small battery can keep the chip running for years without external power.  By default, each device date was set as the year 2000, and the certificates on the access points didn’t become valid until 2016. This was the only thing I had to configure on each device, but once I had them all set I had a completely functional classroom set of 2504 controllers. </pre>
+            <h3 id="contentSubTitle">Learning More</h3>
+
+            <pre id="contentText">I would never recommend anyone use a physical wireless LAN controller in an actual production environment. These devices are expensive, require powering and maintaining another physical device, and need to be upgraded every few years to stay in support. If you need to manage a large quantity of LWAPs the best option is to setup a virtual machine, Cisco provides a VM image themselves if you really love the Cisco WLC GUI. These devices are great for students to learn however. Old end of life WLCs are relatively inexpensive, and are a great way for students to learn about how wireless networks work in the industry. If you would like to read about a configuration I made for these devices, you can check out the GitHub page linked at the top of this post. </pre>
+
+            <br>
+            <br>
+        </div>
+        
+    </div>
+</body>
+</html>
+
+
+

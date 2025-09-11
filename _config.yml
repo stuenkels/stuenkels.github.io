@@ -2,7 +2,7 @@ title: circlerockBlog
 author: Elijah Stuenkel
 url: https://circlerock.com/ # root address of the site
 description: > # description of the site (multiple lines allowed)
-  My lil blog site for network doccumintation and tutorials 
+  Personal blog site for network doccumintation and tutorials 
 
 permalink: /:slug
 

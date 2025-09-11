@@ -3,6 +3,4 @@ layout: post
 title: About
 ---
 
-This is an example page!
-
-Actually, it has the same layout of a post...
+Networking and server configuration tutorials, sharing information I wish I had had when settup up my own network.

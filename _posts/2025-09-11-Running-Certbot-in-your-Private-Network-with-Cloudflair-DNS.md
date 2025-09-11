@@ -13,7 +13,11 @@ layout: post
 
 ### [Overview](#overview)
 
-Certbot is a wonderful tool for automatic the process of SSL certificate requests and renewal. On my Proxmox host I am running an nginx reverse proxy to provide secure https access to the management console. On a public server running nginx, it is trivial to install Certbot's nginx plugin and generate a certificate, however that method works by checking public DNS records and matching the local system's IP address to the DNS A or AAAA record. This works great for public services; however, I do not have any public IPv4 addresses and run my management services in the private 10.99.0.0/24 subnet. This guide will go over how certificates can still be automatically generated, even on systems which do not have a public IP.
+Certbot is a wonderful tool for automatic the process of SSL certificate requests and renewal. On my Proxmox host I am running an nginx reverse proxy to provide secure https access to the management console. 
+
+On a public server running nginx, it is trivial to install Certbot's nginx plugin and generate a certificate, however that method works by checking public DNS records and matching the local system's IP address to the DNS A or AAAA record. This works great for public services; except I do not have any public IPv4 addresses and run my management services in the private 10.99.0.0/24 subnet. 
+
+This guide will go over how certificates can still be automatically generated, even on systems which do not have a public IP.
 
 ---
 
@@ -24,11 +28,8 @@ Certbot can be installed through the Debian apt repository using the command
 
 You will also need <em>curl</em> and <em>jq</em>
 
-```sudo apt install curl jq -y```
+```sudo apt install curl jq```
 
-If you are running on a public server using Nginx, all you have to do is run the following command:
-
-```sudo certbot --nginx -d www.example.com```
 
 Once certbot is installed we can move on to setup up our manual DNS challenge scripts which will create a DNS record on our Cloudflare account automatically using an API key.
 

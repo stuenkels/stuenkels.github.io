@@ -52,23 +52,33 @@ The following steps should be run on both servers; server specific configuration
 
 The first thing to do on any server is update and upgrade. I will be running debian servers, so all installation and update commands will be based around the apt package manager. 
 
-```sudo apt update && sudo apt upgrade -y```
+```
+sudo apt update && sudo apt upgrade -y
+```
 
 The next step is to install Wireguard and iptables. Iptables is how the various routing rules will be configured and is sometimes not installed by default.
 
-```sudo apt install wireguard iptables -y```
+```
+sudo apt install wireguard iptables -y
+```
 
 We also need to enable IPv4 forwarding on the interfaces. This will allow the server to take a packet with a destination address that is not on the local system and pass it off through another interface, turning our server into a router. Create a file in <em>/etc/sysctl.d/</em> called <em>99-wireguard.conf</em>.
 
-```sudo touch /etc/sysctl.d/99-wireguard.conf```
+```
+sudo touch /etc/sysctl.d/99-wireguard.conf
+```
 
 Open the file with a text editor with sudo permissions and paste in the following line:
 
-```net.ipv4.ip_forward = 1```
+```
+net.ipv4.ip_forward = 1
+```
 
 Save the file and reload system configurations with:
 
-```sudo sysctl --system```
+```
+sudo sysctl --system
+```
 
 At the bottom of the output, you should see that <em>net.ipv4.ip_forward = 1</em> has been echoed back. On system boot, configuration options in <em>/etc/sysctl.d</em> will be loaded automatically. 
 
@@ -133,7 +143,9 @@ sudo systemd start wg-quick@wg0
 
 Connection status can be monitored using: 
 
-```sudo wg```
+```
+sudo wg
+```
 
 ---
 

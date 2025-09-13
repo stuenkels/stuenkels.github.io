@@ -24,11 +24,15 @@ This guide will go over how certificates can still be automatically generated, e
 ### [Installing Certbot](#installing-certbot)
 Certbot can be installed through the Debian apt repository using the command 
 
-```sudo apt install certbot```
+```
+sudo apt install certbot
+```
 
 You will also need <em>curl</em> and <em>jq</em>
 
-```sudo apt install curl jq```
+```
+sudo apt install curl jq
+```
 
 
 Once certbot is installed we can move on to setup up our manual DNS challenge scripts which will create a DNS record on our Cloudflare account automatically using an API key.
@@ -40,7 +44,9 @@ Certbot can use two scripts for manual DNS challenges, <em>manual-auth-hook</em>
 
 On your server, navigate to the directory you want your scripts to be stored in. I will be using <em>/usr/local/sbin/</em>, as this direcotry is already in my path. CD into the directory:
 
-```cd /usr/local/sbin/```
+```
+cd /usr/local/sbin/
+```
 
 Create the bash script file <em>manual-auth-hook.sh</em> and <em>manual-cleanup-hook.sh</em>:
 
@@ -177,6 +183,8 @@ server {
 
 Restart Nginx:
 
-``` sudo systemctl restart nginx ```
+```
+sudo systemctl restart nginx
+```
 
 Your server should now be up and running using https and a certificate generated from within your local private network. Make sure your private DNS server is settup with the new domain, or you will get a warning when connecting to the server. 
